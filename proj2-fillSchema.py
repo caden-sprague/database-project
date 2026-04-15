@@ -32,7 +32,7 @@ random.seed(42)
 DB = {
     "host":     os.getenv("POSTGRES_HOST", "localhost"),
     "port":     int(os.getenv("POSTGRES_PORT", 5432)),
-    "dbname":   os.getenv("POSTGRES_DB", "labdb"),
+    "dbname":   os.getenv("POSTGRES_DB", "proj"),
     "user":     os.getenv("POSTGRES_USER"),
     "password": os.getenv("POSTGRES_PASSWORD"),
 }
