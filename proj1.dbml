@@ -1,0 +1,132 @@
+Table "Store" {
+  "StoreID" int [pk, not null, increment]
+  "StoreNumber" int [unique, not null, default: 0]
+  "Street" varchar(100) [not null]
+  "City" varchar(100) [not null]
+  "State" varchar(2) [not null]
+  "ZIP" varchar(10) [not null]
+  "Hours" varchar(500)
+}
+
+Table "Employee" {
+  "EID" int [pk, not null]
+  "FirstName" varchar(100) [not null]
+  "LastName" varchar(100) [not null]
+  "Role" varchar(50) [not null]
+  "Phone" varchar(20)
+  "StoreID" int [not null, ref: > "Store"."StoreID"]
+}
+
+Table "Product" {
+  "ProductID" int [pk, not null]
+  "Name" varchar(100) [not null]
+  "Brand" varchar(100) [not null]
+  "Price" decimal [not null]
+  "SupplierID" int [not null, ref: > "Supplier"."SupplierID"]
+  "CategoryID" int [not null, ref: > "Category"."CategoryID"]
+  "SKU" varchar(50) [unique, not null]
+
+  checks {
+    `Price >= 0
+`
+  }
+}
+
+Table "Supplier" {
+  "SupplierID" int [pk, not null]
+  "Name" varchar(100) [not null]
+  "Contact" varchar(500) [not null]
+}
+
+Table "Category" {
+  "CategoryID" int [pk, not null]
+  "Name" varchar(100) [unique, not null]
+
+  Note: 'Predefined: Produce, Meat, Dairy, Frozen, Bakery, Pantry, Cleaning, Beverages'
+}
+
+Table "Inventory" {
+  "StoreID" int [not null, ref: > "Store"."StoreID"]
+  "ProductID" int [not null, ref: > "Product"."ProductID"]
+  "Quantity" int [not null, default: 0, note: '>= 0']
+
+  Indexes {
+    (StoreID, ProductID) [pk]
+  }
+
+  Note: 'Composite PK(StoreID, ProductID)'
+
+  checks {
+    `Quantity>=0`
+  }
+}
+
+Table "Customer" {
+  "CID" int [pk, not null]
+  "FirstName" varchar(100) [not null]
+  "LastName" varchar(100) [not null]
+  "Phone" varchar(20)
+  "Email" varchar(254) [unique]
+}
+
+Table "CustomerTransaction" {
+  "SaleID" int [pk, not null]
+  "StoreID" int [not null, ref: > "Store"."StoreID"]
+  "CID" int [ref: > "Customer"."CID"]
+  "DateTime" timestamp [not null]
+}
+
+Table "SaleItem" {
+  "SaleID" int [not null, ref: > "CustomerTransaction"."SaleID"]
+  "ProductID" int [not null, ref: > "Product"."ProductID"]
+  "Quantity" int [not null, note: '> 0']
+  "PriceAtTime" decimal [not null]
+
+  Indexes {
+    (SaleID, ProductID) [pk]
+  }
+
+  Note: 'Composite PK(SaleID, ProductID)'
+
+  checks {
+    `Quantity>0
+`
+    `PriceAtTime>=0
+`
+  }
+}
+
+Table "RestockOrder" {
+  "OrderID" int [pk, not null]
+  "StoreID" int [not null, ref: > "Store"."StoreID"]
+  "SupplierID" int [not null, ref: > "Supplier"."SupplierID"]
+  "DeliveryDate" date [not null]
+}
+
+Table "RestockDetail" {
+  "OrderID" int [not null, ref: > "RestockOrder"."OrderID"]
+  "ProductID" int [not null, ref: > "Product"."ProductID"]
+  "QuantityDelivered" int [not null, note: '> 0']
+
+  Indexes {
+    (OrderID, ProductID) [pk]
+  }
+
+  Note: 'Composite PK(OrderID, ProductID)'
+
+  checks {
+    `QuantityDelivered>0
+`
+  }
+}
+
+Table "StoreHours" {
+  "StoreID" int [not null, ref: > "Store"."StoreID"]
+  "DayOfWeek" int [not null]
+  "OpenTime" time [not null]
+  "CloseTime" time [not null]
+
+  Indexes {
+    (StoreID, DayOfWeek) [pk]
+  }
+}

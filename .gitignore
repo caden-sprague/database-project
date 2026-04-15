@@ -1,0 +1,191 @@
+#################################################
+# 1. Environment & Secrets
+#################################################
+
+# Ignore real environment files
+.env
+.env.*
+*.env
+*.secret
+*.secrets
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+
+# Allow example template
+!.env.example
+
+# Secret directories
+secrets/
+credentials/
+wallet/
+
+#################################################
+# 2. Docker & Local Overrides
+#################################################
+
+# Local override compose files
+docker-compose.override.yml
+docker-compose.local.yml
+docker-compose.dev.yml
+
+# Docker build artifacts
+.docker/
+docker-build/
+*.tar
+*.tar.gz
+*.img
+
+#################################################
+# 3. Database Data & Volumes
+#################################################
+
+# Local bind-mounted database directories
+mysql_data/
+postgres_data/
+oracle_data/
+pg_data/
+data/
+db_data/
+
+db_lab/mysql
+db_lab/oracle
+db_lab/postgres
+
+# SQLite files (if ever used)
+*.sqlite
+*.sqlite3
+*.db
+
+#################################################
+# 4. Database Dumps / Backups
+#################################################
+
+*.sql.gz
+*.dump
+*.bak
+backups/
+dumps/
+exports/
+
+#################################################
+# 5. Logs
+#################################################
+
+*.log
+logs/
+*.out
+*.err
+
+#################################################
+# 6. Temporary / Runtime Files
+#################################################
+
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+*.history
+
+#################################################
+# 7. IDE & Editor Files
+#################################################
+
+# VS Code
+.vscode/
+
+# JetBrains (IntelliJ, CLion, DataGrip, etc.)
+.idea/
+*.iml
+
+# Sublime
+*.sublime-workspace
+*.sublime-project
+
+#################################################
+# 8. OS Files
+#################################################
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+#################################################
+# 9. Python (if grading scripts added)
+#################################################
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+.mypy_cache/
+.pytest_cache/
+
+#################################################
+# 10. Node (if web UI added)
+#################################################
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+pnpm-lock.yaml
+
+#################################################
+# 11. Testing / Student Artifacts
+#################################################
+
+student_submissions/
+grading_outputs/
+test_outputs/
+coverage/
+
+#################################################
+# 12. CI / Deployment Artifacts
+#################################################
+
+*.coverage
+coverage.xml
+*.lcov
+
+#################################################
+# 13. Oracle Specific Safety
+#################################################
+
+# Oracle wallet files
+cwallet.sso
+ewallet.p12
+
+# Oracle trace / diagnostic files (if exported)
+*.trc
+*.dmp
+*.aud
+
+#################################################
+# 14. DBeaver Related
+#################################################
+.dbeaver
+.project
+
+
+users.txt
+wip
+invite.sh
